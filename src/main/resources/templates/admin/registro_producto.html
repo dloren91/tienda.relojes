@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:insert="fragments/general.html :: menu "></div>
+
+<div>Introduce los datos del nuevo producto</div>
+
+<form action="#" th:action="@{guardarReloj}" th:object="${nuevo}" method="post" enctype="multipart/form-data">
+    modelo: <input type="text" th:field="*{modelo}">
+    <span style="color: red" th:if="${#fields.hasErrors('modelo')}" th:errors="*{modelo}"></span>
+    <br>
+    precio: <input type="number" step="0.01" th:field="*{precio}">
+    <span style="color: red" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}"></span>
+
+    <br>
+    marca: <input type="text" th:field="*{marca}">
+    <span style="color: red" th:if="${#fields.hasErrors('marca')}" th:errors="*{marca}"></span>
+    <br>
+    material: <input type="text" th:field="*{material}">
+    <br>
+    resistencia al agua (m): <input type="number" th:field="*{resistenciaAgua}">
+    <br>
+    ¿es automático?: <input type="checkbox" th:field="*{automatico}">
+    <br>
+    imagen: <input type="file" th:field="*{fotoSubida}">
+    <br>
+    <input type="submit" value="enviar">
+</form>
+
+</body>
+</html>

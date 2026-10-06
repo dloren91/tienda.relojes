@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Relojes - Administración</title>
+    <!-- CDN de Tailwind CSS v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased flex flex-col md:flex-row min-w-0 overflow-x-hidden">
+
+<!-- MENÚ LATERAL (FIXED/STICKY A LA IZQUIERDA EN ESCRITORIO) -->
+<aside class="w-full md:w-64 bg-slate-900 border-r border-slate-800 flex-shrink-0 flex flex-col justify-between md:sticky md:top-0 md:h-screen z-40">
+    <div>
+        <!-- Logo y Nombre -->
+        <div class="p-6 border-b border-slate-800/80 flex items-center gap-3">
+            <span class="text-3xl">⌚</span>
+            <div>
+                <h1 class="text-lg font-black tracking-widest text-amber-400 uppercase leading-none">
+                    Lorenzo
+                </h1>
+                <span class="text-[10px] font-semibold text-slate-400 tracking-wider block mt-1 uppercase">
+                        Admin Panel
+                    </span>
+            </div>
+        </div>
+
+        <!-- Navegación -->
+        <nav class="p-4 flex flex-col gap-1 text-sm font-semibold text-slate-300">
+            <a th:href="@{/admin/gestionarRelojes}" href="gestionarRelojes"
+               class="flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-800/80 text-amber-400 border border-amber-400/20 transition-colors">
+                <span class="text-base">📦</span>
+                <span>Gestionar Relojes</span>
+            </a>
+
+            <a th:href="@{/admin/gestionarUsuarios}" href="#"
+               class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-amber-400 transition-colors">
+                <span class="text-base">👥</span>
+                <span>Gestionar Usuarios</span>
+            </a>
+
+            <a th:href="@{/admin/gestionarCategorias}" href="#"
+               class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-amber-400 transition-colors">
+                <span class="text-base">🏷️️</span>
+                <span>Gestionar Categorías</span>
+            </a>
+
+            <a th:href="@{/admin/gestionarPedidos}" href="#"
+               class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-amber-400 transition-colors">
+                <span class="text-base">📋</span>
+                <span>Gestionar Pedidos</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Botón Volver -->
+    <div class="p-4 border-t border-slate-800/80">
+        <a th:href="@{/}" href="../"
+           class="flex items-center justify-center gap-2 w-full py-2.5 px-4 text-xs font-bold text-slate-300 bg-slate-800/60 hover:bg-slate-800 border border-slate-700/50 hover:text-amber-400 rounded-xl transition-colors">
+            <span>←</span> Volver a la Tienda
+        </a>
+    </div>
+</aside>
+
+<!-- CONTENIDO PRINCIPAL -->
+<main class="flex-1 p-3 sm:p-6 md:p-8 flex flex-col gap-4 w-full max-w-5xl mx-auto min-w-0">
+
+    <!-- ENCABEZADO Y BOTÓN NUEVO PRODUCTO -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-900/80 border border-slate-800 p-4 rounded-2xl w-full min-w-0 shadow-lg">
+        <div class="min-w-0">
+            <h1 class="text-lg sm:text-2xl font-extrabold text-white tracking-tight flex items-center gap-2 truncate">
+                <span>⌚</span> Gestor de Relojes
+            </h1>
+            <p class="text-slate-400 text-xs sm:text-sm mt-0.5">
+                Listado de productos disponibles.
+            </p>
+        </div>
+
+        <div class="w-full sm:w-auto">
+            <a th:href="@{/admin/registrarReloj}" href="registrarReloj"
+               class="inline-flex items-center justify-center gap-2 w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl shadow-lg shadow-amber-500/20 transition-all">
+                <span>➕</span> Nuevo producto
+            </a>
+        </div>
+    </div>
+
+    <!-- LISTA DE PRODUCTOS (TARJETAS RESPONSIVE) -->
+    <div class="flex flex-col gap-3 w-full min-w-0">
+
+        <!-- TARJETA INDIVIDUAL POR CADA RELOJ -->
+        <div th:each="r : ${relojes}" class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 sm:p-4 flex flex-col gap-3 shadow-md w-full min-w-0">
+
+            <!-- 1. Cabecera de la Tarjeta: Imagen + Modelo + Marca + Precio -->
+            <div class="flex items-center gap-3 border-b border-slate-800/80 pb-3 min-w-0">
+                <!-- Thumbnail de Imagen -->
+                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-slate-950 border border-slate-800 rounded-lg flex-shrink-0 flex items-center justify-center p-1">
+                    <img th:src="@{${ '../mostrar_imagen?id=' + r.id }}" alt="Reloj" class="max-h-full max-w-full object-contain">
+                </div>
+
+                <!-- Datos Principales del Reloj -->
+                <div class="flex-1 min-w-0">
+                    <span class="text-amber-400 font-extrabold uppercase text-[10px] tracking-wider block truncate" th:text="${r.marca}">MARCA</span>
+                    <h2 class="text-sm sm:text-base font-extrabold text-white truncate leading-tight mt-0.5" th:text="${r.modelo}">Modelo del Reloj</h2>
+                    <div class="text-base sm:text-lg font-black text-amber-400 mt-0.5">
+                        <span th:text="${r.precio}">0.00</span> €
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Lista Flexible de Especificaciones (Clave : Valor) -->
+            <div class="flex flex-col gap-1.5 text-xs bg-slate-950/60 p-2.5 rounded-lg border border-slate-800/60 w-full min-w-0">
+
+                <div class="flex justify-between items-center gap-2">
+                    <span class="text-slate-400 font-medium shrink-0">Material:</span>
+                    <span class="text-slate-200 font-semibold truncate text-right" th:text="${r.material}">Acero</span>
+                </div>
+
+                <div class="flex justify-between items-center gap-2 border-t border-slate-800/40 pt-1.5">
+                    <span class="text-slate-400 font-medium shrink-0">Resistencia al agua:</span>
+                    <span class="text-slate-200 font-semibold" th:text="${r.resistenciaAgua} + ' m'">100 m</span>
+                </div>
+
+                <div class="flex justify-between items-center gap-2 border-t border-slate-800/40 pt-1.5">
+                    <span class="text-slate-400 font-medium shrink-0">Tipo movimiento:</span>
+                    <span th:if="${r.automatico}" class="text-emerald-400 font-semibold">✔ Automático</span>
+                    <span th:unless="${r.automatico}" class="text-slate-400 font-semibold">✘ Manual</span>
+                </div>
+
+            </div>
+
+            <!-- 3. Botones de Acción -->
+            <div class="flex flex-col sm:flex-row gap-2 pt-1 w-full min-w-0">
+                <a th:href="@{${ 'editarReloj?id='+ r.id}}"
+                   class="w-full flex-1 inline-flex justify-center items-center gap-1.5 py-2 px-3 bg-sky-500/10 hover:bg-sky-500 text-sky-400 hover:text-slate-950 border border-sky-500/20 rounded-lg text-xs font-bold transition-all">
+                    ✏️ Editar
+                </a>
+                <a th:href="@{${ 'borrarReloj?id='+ r.id}}"
+                   onclick="return confirm('¿Estás seguro de que quieres eliminar este reloj?')"
+                   class="w-full flex-1 inline-flex justify-center items-center gap-1.5 py-2 px-3 bg-rose-500/10 hover:bg-rose-600 text-rose-400 hover:text-white border border-rose-500/20 rounded-lg text-xs font-bold transition-all">
+                    🗑️ Borrar
+                </a>
+            </div>
+
+        </div>
+
+        <!-- MENSAJE LISTA VACÍA -->
+        <div th:if="${#lists.isEmpty(relojes)}" class="bg-slate-900 border border-slate-800 rounded-xl p-8 text-center text-slate-500 w-full">
+            <p class="text-xs sm:text-sm font-semibold">No hay relojes registrados en el sistema.</p>
+        </div>
+
+    </div>
+
+</main>
+
+</body>
+</html>

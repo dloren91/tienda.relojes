@@ -1,0 +1,47 @@
+{{#.}}
+<div class="group bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-2xl p-5 flex flex-col items-center gap-5 shadow-xl hover:-translate-y-1.5 hover:border-amber-500 hover:shadow-amber-500/10 transition-all duration-300">
+
+    <!-- Imagen a la izquierda/arriba -->
+    <div class="w-full flex justify-center items-center bg-slate-950 rounded-xl p-4 border border-slate-800">
+        <img class="w-44 h-44 object-contain transition-transform duration-300 group-hover:scale-105" src="mostrar_imagen?id={{id}}" alt="{{modelo}}"/>
+    </div>
+
+    <!-- Datos del reloj -->
+    <div class="flex flex-col gap-1.5 w-full">
+        <h3 class="text-xl font-extrabold text-amber-400 tracking-tight mb-1">{{modelo}}</h3>
+
+        <p class="text-sm text-slate-400 flex justify-between border-b border-slate-800/80 pb-1">
+            <strong class="text-slate-200 font-semibold">Precio:</strong>
+            <span class="text-slate-100 font-bold">{{precio}} €</span>
+        </p>
+        <p class="text-sm text-slate-400 flex justify-between border-b border-slate-800/80 pb-1">
+            <strong class="text-slate-200 font-semibold">Marca:</strong> {{marca}}
+        </p>
+        <p class="text-sm text-slate-400 flex justify-between border-b border-slate-800/80 pb-1">
+            <strong class="text-slate-200 font-semibold">Material:</strong> {{material}}
+        </p>
+        <p class="text-sm text-slate-400 flex justify-between border-b border-slate-800/80 pb-1">
+            <strong class="text-slate-200 font-semibold">Profundidad agua:</strong> {{resistenciaAgua}} m
+        </p>
+        <p class="text-sm text-slate-400 flex justify-between border-b border-slate-800/80 pb-1">
+            <strong class="text-slate-200 font-semibold">Automático:</strong> {{#automatico}}✔{{/automatico}}{{^automatico}}✘{{/automatico}}
+        </p>
+
+        <!-- Acciones -->
+        <div class="mt-auto pt-3 flex flex-col gap-3 w-full border-t border-slate-700/50">
+            <a href="#" onclick="mostrar_detalles({{id}})" class="text-sky-400 hover:text-sky-300 font-semibold text-sm text-center hover:underline transition-colors">
+                Ver detalles
+            </a>
+
+            <div class="flex items-center justify-center gap-2 text-sm text-slate-300">
+                <label for="cantidad-{{id}}">Cantidad:</label>
+                <input id="cantidad-{{id}}" type="number" value="1" min="1" class="w-14 bg-slate-900 text-slate-100 border border-slate-600 rounded-md py-1 px-2 text-center font-semibold outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all">
+            </div>
+
+            <a href="#" class="inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-950 hover:text-white font-bold text-sm py-2.5 px-4 rounded-lg shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transition-all duration-200">
+                🛒 Agregar al carrito
+            </a>
+        </div>
+    </div>
+</div>
+{{/.}}

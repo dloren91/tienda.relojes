@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:insert="fragments/general.html :: menu "></div>
+
+<div>Modifica los datos del producto</div>
+
+<form action="#" th:action="guardarCambiosReloj" th:object="${relojEditar}" method="post" enctype="multipart/form-data">
+    modelo: <input type="text" th:field="*{modelo}">
+    <span style="color: red" th:if="${#fields.hasErrors('modelo')}" th:errors="*{modelo}"></span>
+    <br>
+    precio: <input type="number" th:field="*{precio}">
+    <span style="color: red" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}"></span>
+    <br>
+    marca: <input type="text" th:field="*{marca}">
+    <span style="color: red" th:if="${#fields.hasErrors('marca')}" th:errors="*{marca}"></span>
+    <br>
+    material: <input type="text" th:field="*{material}">
+    <br>
+    foto actual:
+    <br>
+    <img th:src="@{/mostrar_imagen(id=${relojEditar.id})}" height="80px" />
+    <br>
+    portada: <input type="file" th:field="*{fotoSubida}">
+    <br>
+    resistenciaAgua: <input type="text" th:field="*{resistenciaAgua}">
+    <br>
+    automatico: <input type="text" th:field="*{automatico}">
+    <br>
+    <input type="hidden" th:field="*{id}">
+    <input type="submit" value="GUARDAR CAMBIOS">
+</form>
+
+</body>
+</html>
