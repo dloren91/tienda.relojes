@@ -1,0 +1,147 @@
+<div class="col-span-full max-w-4xl mx-auto w-full bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-2xl p-6 md:p-10 shadow-2xl flex flex-col gap-6 my-4">
+
+    <!-- Top link to go back -->
+    <div>
+        <button onclick="mostrar_relojes()" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-amber-400 transition-colors cursor-pointer group">
+            <span class="group-hover:-translate-x-1 transition-transform">←</span> Back to the watch catalog
+        </button>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+
+        <!-- LEFT COLUMN: IMAGE CAROUSEL -->
+        <div class="flex flex-col gap-3">
+            <div class="relative w-full bg-slate-950 border border-slate-800 rounded-xl p-6 flex justify-center items-center min-h-[300px] overflow-hidden group">
+
+                <!-- Image 1: Standard view (initially VISIBLE) -->
+                <div id="slide-1" class="block w-full flex justify-center transition-opacity duration-300">
+                    <img class="max-w-full max-h-64 h-auto object-contain drop-shadow-[0_10px_15px_rgba(0,0,0,0.5)]"
+                         src="mostrar_imagen?id={{ID}}" alt="{{MODELO_RELOJ}}"/>
+
+                </div>
+
+                <!-- Image 2: Detail view (initially HIDDEN) -->
+                <div id="slide-2" class="hidden w-full flex justify-center transition-opacity duration-300">
+                    <img class="max-w-full max-h-64 h-auto object-contain drop-shadow-[0_10px_15px_rgba(0,0,0,0.5)]"
+                         src="imagenes_productos_iniciales/{{MARCA}}Detalles.png"
+                         alt="{{MARCA_RELOJ}} - Details" />
+                </div>
+
+                <!-- Left button (back arrow) -->
+                <button onclick="cambiarImagen()" class="absolute left-2 top-1/2 -translate-y-1/2 bg-slate-900/80 hover:bg-amber-500 text-white hover:text-slate-950 p-2.5 rounded-full border border-slate-700 transition-all cursor-pointer shadow-lg active:scale-95">
+                    &#10094;
+                </button>
+
+                <!-- Right button (forward arrow) -->
+                <button onclick="cambiarImagen()" class="absolute right-2 top-1/2 -translate-y-1/2 bg-slate-900/80 hover:bg-amber-500 text-white hover:text-slate-950 p-2.5 rounded-full border border-slate-700 transition-all cursor-pointer shadow-lg active:scale-95">
+                    &#10095;
+                </button>
+            </div>
+
+            <!-- Dots below indicate which photo is being displayed -->
+            <div class="flex justify-center gap-2 py-1">
+                <button id="dot-1" onclick="mostrarImagen(1)" class="w-6 h-2.5 rounded-full bg-amber-400 transition-all cursor-pointer" title="Standard view"></button>
+                <button id="dot-2" onclick="mostrarImagen(2)" class="w-2.5 h-2.5 rounded-full bg-slate-600 hover:bg-slate-400 transition-all cursor-pointer" title="View details"></button>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: WATCH INFORMATION -->
+        <div class="flex flex-col text-left">
+            <span class="uppercase text-xs font-bold tracking-widest text-sky-400 mb-1">
+                {{MARCA}}
+            </span>
+
+            <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight mb-3">
+                {{MODELO_RELOJ}}
+            </h1>
+
+            <div class="text-4xl font-black text-amber-400 mb-6">
+                {{PRECIO}} <span class="text-2xl font-semibold">€</span>
+            </div>
+
+            <!-- Specifications -->
+            <div class="bg-slate-900/70 border border-slate-800 rounded-xl p-4 mb-6 flex flex-col gap-3">
+                <div class="flex justify-between text-sm text-slate-400">
+                    <span>Category:</span>
+                    <strong class="text-slate-100 font-semibold">{{CATEGORIA}}</strong>
+                </div>
+                <div class="flex justify-between text-sm text-slate-400">
+                    <span>Movement:</span>
+                    <strong class="text-slate-100 font-semibold">
+                        {{#AUTOMATICO}}Automatic ✔{{/AUTOMATICO}}{{^AUTOMATICO}}Non-automatic ✘{{/AUTOMATICO}}
+                    </strong>
+                </div>
+                <div class="flex justify-between text-sm text-slate-400">
+                    <span>Material:</span>
+                    <strong class="text-slate-100 font-semibold">{{MATERIAL}}</strong>
+                </div>
+                <div class="flex justify-between text-sm text-slate-400">
+                    <span>Water resistance:</span>
+                    <strong class="text-slate-100 font-semibold">{{RESISTENCIA_AGUA}} m</strong>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex flex-wrap gap-4 items-center">
+                <div class="flex items-center gap-2 text-slate-300 text-sm font-semibold">
+                    <label for="cant-{{ID}}">Quantity:</label>
+                    <input id="cant-{{ID}}" type="number" value="1" min="1" class="w-16 bg-slate-900 text-white border border-slate-600 rounded-lg p-2 text-center font-bold outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all">
+                </div>
+
+                <a href="#" class="flex-1 inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-950 hover:text-white font-bold text-base py-3 px-5 rounded-lg shadow-lg shadow-amber-500/20 hover:-translate-y-0.5 transition-all duration-200">
+                    🛒 Add to cart
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- IMAGE SWITCHER (JAVASCRIPT) -->
+<script>
+    // Tracks which image is currently displayed (starts at 1)
+    let imagenActual = 1;
+
+    // Shows image X and hides the other one
+    function mostrarImagen(num) {
+        const slide1 = document.getElementById('slide-1');
+        const slide2 = document.getElementById('slide-2');
+        const dot1 = document.getElementById('dot-1');
+        const dot2 = document.getElementById('dot-2');
+
+        if (num === 1) {
+            // Show the standard image and hide the details
+            slide1.classList.remove('hidden');
+            slide1.classList.add('block');
+            slide2.classList.remove('block');
+            slide2.classList.add('hidden');
+
+            // Set the first dot to gold and the second to gray
+            dot1.className = 'w-6 h-2.5 rounded-full bg-amber-400 transition-all cursor-pointer';
+            dot2.className = 'w-2.5 h-2.5 rounded-full bg-slate-600 hover:bg-slate-400 transition-all cursor-pointer';
+
+            imagenActual = 1;
+        } else {
+            // Show the details and hide the standard image
+            slide2.classList.remove('hidden');
+            slide2.classList.add('block');
+            slide1.classList.remove('block');
+            slide1.classList.add('hidden');
+
+            // Set the second dot to gold and the first to gray
+            dot2.className = 'w-6 h-2.5 rounded-full bg-amber-400 transition-all cursor-pointer';
+            dot1.className = 'w-2.5 h-2.5 rounded-full bg-slate-600 hover:bg-slate-400 transition-all cursor-pointer';
+
+            imagenActual = 2;
+        }
+    }
+
+    // The arrows toggle between image 1 and image 2
+    function cambiarImagen() {
+        if (imagenActual === 1) {
+            mostrarImagen(2);
+        } else {
+            mostrarImagen(1);
+        }
+    }
+</script>

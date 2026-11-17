@@ -1,17 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Administración - Lorenzo</title>
+    <!-- CDN de Tailwind CSS v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
-<div>
-    No puedes acceder a administracion hasta q te identifiques
+<body class="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased flex items-center justify-center p-4">
+
+<!-- CONTENEDOR PRINCIPAL / TARJETA DE LOGIN -->
+<div class="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl flex flex-col gap-6">
+
+    <!-- LOGO Y ENCABEZADO -->
+    <div class="flex flex-col items-center text-center gap-2">
+        <div class="w-16 h-16 bg-slate-950 border border-slate-800 rounded-2xl flex items-center justify-center text-3xl shadow-inner mb-1">
+            ⌚
+        </div>
+        <h1 class="text-xl font-black tracking-widest text-amber-400 uppercase">
+            Lorenzo
+        </h1>
+        <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">
+                Panel de Administración
+            </span>
+    </div>
+
+    <!-- MENSAJE DE ADVERTENCIA / AVISO -->
+    <div class="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 text-center">
+        <p class="text-xs sm:text-sm font-semibold text-amber-300/90 leading-relaxed">
+            🔒 No puedes acceder a administración hasta que te identifiques.
+        </p>
+    </div>
+
+    <!-- FORMULARIO DE ACCESO -->
+    <form action="admin/gestionarRelojes" method="post" class="flex flex-col gap-5">
+
+        <div class="flex flex-col gap-2">
+            <label for="pass-login-admin" class="text-xs font-bold text-slate-300 uppercase tracking-wider">
+                Contraseña de acceso
+            </label>
+            <input
+                    type="password"
+                    id="pass-login-admin"
+                    name="pass-login-admin"
+                    placeholder="Ingresa tu contraseña"
+                    required
+                    class="w-full bg-slate-950 border border-slate-800 focus:border-amber-400 text-slate-100 text-sm rounded-xl px-4 py-3 outline-none transition-colors placeholder:text-slate-600"
+            >
+        </div>
+
+        <button
+                type="submit"
+                class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-sm py-3 px-4 rounded-xl shadow-lg shadow-amber-500/20 transition-all cursor-pointer uppercase tracking-wider">
+            Aceptar
+        </button>
+
+    </form>
+
+    <!-- ENLACE VOLVER A LA TIENDA -->
+    <div class="border-t border-slate-800/80 pt-4 text-center">
+        <a href="/" class="text-xs font-semibold text-slate-400 hover:text-amber-400 transition-colors inline-flex items-center gap-1">
+            ← Volver a la tienda
+        </a>
+    </div>
+
 </div>
 
-<form action="admin/gestionarRelojes">
-    pass <input type="text" name="pass-login-admin"> <br>
-    <input type="submit" value="ACEPTAR">
-</form>
 </body>
 </html>

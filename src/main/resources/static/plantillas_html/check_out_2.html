@@ -1,0 +1,40 @@
+<section class="col-span-full w-full max-w-xl mx-auto flex flex-col gap-6">
+    <div class="border-b border-slate-800 pb-3">
+        <h2 class="text-2xl font-extrabold text-amber-400 tracking-tight">Realizar pedido · Paso 2</h2>
+        <p class="text-sm text-slate-400 mt-1">Introduce los datos de pago</p>
+    </div>
+
+    <div class="flex flex-col gap-4 bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-2xl p-6 shadow-xl">
+        <label class="flex flex-col gap-1.5 text-sm font-semibold text-slate-300">
+            Tipo de tarjeta
+            <select id="tipo_tarjeta"
+                    class="bg-slate-900 text-slate-100 border border-slate-600 rounded-md py-2 px-3 outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all">
+                <option value="0">Elegir tipo</option>
+                <option value="visa">VISA</option>
+                <option value="master_card">MASTER CARD</option>
+            </select>
+        </label>
+        <label class="flex flex-col gap-1.5 text-sm font-semibold text-slate-300">
+            Número de la tarjeta
+            <input type="text" id="numero_tarjeta"
+                   class="bg-slate-900 text-slate-100 border border-slate-600 rounded-md py-2 px-3 outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"/>
+        </label>
+        <label class="flex flex-col gap-1.5 text-sm font-semibold text-slate-300">
+            Titular de la tarjeta
+            <input type="text" id="titular_tarjeta"
+                   class="bg-slate-900 text-slate-100 border border-slate-600 rounded-md py-2 px-3 outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"/>
+        </label>
+        <label class="flex flex-col gap-1.5 text-sm font-semibold text-slate-300">
+            Tipo de pago
+            <input type="text" id="tipo_pago"
+                   class="bg-slate-900 text-slate-100 border border-slate-600 rounded-md py-2 px-3 outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"/>
+        </label>
+    </div>
+
+    <div class="flex justify-end">
+        <button id="aceptar_paso_2"
+                class="bg-amber-500 hover:bg-amber-600 text-slate-950 hover:text-white font-bold py-3 px-8 rounded-lg shadow-lg shadow-amber-500/20 transition-all duration-200 cursor-pointer">
+            Aceptar
+        </button>
+    </div>
+</section>

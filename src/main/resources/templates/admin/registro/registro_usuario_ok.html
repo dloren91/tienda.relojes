@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-950" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación - Tienda Lorenzo</title>
+    <!-- CDN de Tailwind CSS v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @keyframes scaleIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-scale-in {
+            animation: scaleIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased flex selection:bg-amber-500 selection:text-slate-950">
+
+<!-- Fragmento del menú / Sidebar -->
+<div th:insert="~{fragments/general.html :: menu}"></div>
+
+<!-- ÁREA PRINCIPAL -->
+<main class="flex-1 ml-0 md:ml-64 p-4 md:p-8 min-h-screen flex items-center justify-center relative overflow-hidden">
+
+    <!-- Resplandor de fondo ambiental -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+    <!-- Tarjeta Principal -->
+    <div class="relative max-w-md w-full bg-slate-900/90 backdrop-blur-xl border border-slate-800/80 rounded-3xl p-8 shadow-2xl text-center space-y-6 animate-scale-in">
+
+        <!-- Ícono con pulso animado -->
+        <div class="relative mx-auto w-20 h-20 flex items-center justify-center">
+            <div class="absolute inset-0 bg-emerald-500/20 rounded-full animate-ping opacity-25"></div>
+            <div class="w-20 h-20 bg-gradient-to-tr from-emerald-600/20 to-emerald-400/10 border border-emerald-500/30 text-emerald-400 rounded-full flex items-center justify-center shadow-lg shadow-emerald-950/50">
+                <svg class="w-10 h-10 stroke-emerald-400 fill-none" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Encabezado -->
+        <div class="space-y-2">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Operación Exitosa
+            </span>
+            <h1 class="text-2xl font-black text-amber-400 tracking-wide uppercase pt-1">
+                Usuario Guardado
+            </h1>
+            <p class="text-slate-400 text-sm font-medium leading-relaxed">
+                El usuario ha sido procesado y registrado correctamente en el sistema.
+            </p>
+        </div>
+
+        <!-- Alerta / Consola estilo Dev -->
+        <div class="flex items-center justify-center gap-2.5 bg-slate-950/80 border border-amber-500/30 rounded-xl px-4 py-3 text-xs text-amber-300/90 font-mono text-left shadow-inner">
+            <svg class="w-4 h-4 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+            <span>Verifica la consola del servidor (LOGS)</span>
+        </div>
+
+        <!-- Acciones principales -->
+        <div class="pt-2 flex flex-col gap-3">
+            <a th:href="@{/admin/gestionarUsuarios}" class="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold px-5 py-3 rounded-xl transition-all duration-200 shadow-lg shadow-amber-500/10 hover:shadow-amber-500/25 active:scale-[0.98]">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+                Volver a Gestionar Usuarios
+            </a>
+        </div>
+
+    </div>
+</main>
+
+</body>
+</html>

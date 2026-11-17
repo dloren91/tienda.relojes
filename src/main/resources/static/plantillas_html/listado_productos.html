@@ -1,46 +1,62 @@
+<!--Buscador y paginacion-->
+<div>
+    buscador - modelo: <input type="text" id="modelo_buscador" />
+</div>
+<div>
+    paginacion:
+    <a id="enlace_anterior"href="#">anterior</a>
+    <a id="enlace_siguiente"href="#">siguiente</a>
+</div>
+<div>
+    total resultados: <span id="resultados"></span>
+</div>
+
 {{#.}}
 <div class="group bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-2xl p-5 flex flex-col items-center gap-5 shadow-xl hover:-translate-y-1.5 hover:border-amber-500 hover:shadow-amber-500/10 transition-all duration-300">
 
-    <!-- Imagen a la izquierda/arriba -->
-    <div class="w-full flex justify-center items-center bg-slate-950 rounded-xl p-4 border border-slate-800">
-        <img class="w-44 h-44 object-contain transition-transform duration-300 group-hover:scale-105" src="mostrar_imagen?id={{id}}" alt="{{modelo}}"/>
+    <!-- Imagen del reloj (ahora interactiva) -->
+    <div onclick="mostrar_detalles({{ID}})" class="w-full flex justify-center items-center bg-slate-950 rounded-xl p-4 border border-slate-800 cursor-pointer overflow-hidden">
+        <img class="w-44 h-44 object-contain transition-transform duration-300 group-hover:scale-105" src="mostrar_imagen?id={{ID}}" alt="{{MODELO_RELOJ}}"/>
     </div>
 
     <!-- Datos del reloj -->
     <div class="flex flex-col gap-1.5 w-full">
-        <h3 class="text-xl font-extrabold text-amber-400 tracking-tight mb-1">{{modelo}}</h3>
+        <!-- Título del reloj (también interactivo) -->
+        <h3 onclick="mostrar_detalles({{ID}})" class="text-xl font-extrabold text-amber-400 tracking-tight mb-1 cursor-pointer hover:underline">
+            {{MODELO_RELOJ}}
+        </h3>
 
         <p class="text-sm text-slate-400 flex justify-between border-b border-slate-800/80 pb-1">
             <strong class="text-slate-200 font-semibold">Precio:</strong>
-            <span class="text-slate-100 font-bold">{{precio}} €</span>
+            <span class="text-slate-100 font-bold">{{PRECIO}} €</span>
         </p>
         <p class="text-sm text-slate-400 flex justify-between border-b border-slate-800/80 pb-1">
-            <strong class="text-slate-200 font-semibold">Marca:</strong> {{marca}}
+            <strong class="text-slate-200 font-semibold">Marca:</strong> {{MARCA}}
         </p>
         <p class="text-sm text-slate-400 flex justify-between border-b border-slate-800/80 pb-1">
-            <strong class="text-slate-200 font-semibold">Material:</strong> {{material}}
+            <strong class="text-slate-200 font-semibold">Categoria:</strong> {{CATEGORIA}}
         </p>
         <p class="text-sm text-slate-400 flex justify-between border-b border-slate-800/80 pb-1">
-            <strong class="text-slate-200 font-semibold">Profundidad agua:</strong> {{resistenciaAgua}} m
+            <strong class="text-slate-200 font-semibold">Material:</strong> {{MATERIAL}}
         </p>
         <p class="text-sm text-slate-400 flex justify-between border-b border-slate-800/80 pb-1">
-            <strong class="text-slate-200 font-semibold">Automático:</strong> {{#automatico}}✔{{/automatico}}{{^automatico}}✘{{/automatico}}
+            <strong class="text-slate-200 font-semibold">Profundidad agua:</strong> {{RESISTENCIA_AGUA}} m
+        </p>
+        <p class="text-sm text-slate-400 flex justify-between border-b border-slate-800/80 pb-1">
+            <strong class="text-slate-200 font-semibold">Automático:</strong> {{#AUTOMATICO}}✔{{/AUTOMATICO}}{{^AUTOMATICO}}✘{{/AUTOMATICO}}
         </p>
 
         <!-- Acciones -->
         <div class="mt-auto pt-3 flex flex-col gap-3 w-full border-t border-slate-700/50">
-            <a href="#" onclick="mostrar_detalles({{id}})" class="text-sky-400 hover:text-sky-300 font-semibold text-sm text-center hover:underline transition-colors">
-                Ver detalles
-            </a>
 
             <div class="flex items-center justify-center gap-2 text-sm text-slate-300">
-                <label for="cantidad-{{id}}">Cantidad:</label>
-                <input id="cantidad-{{id}}" type="number" value="1" min="1" class="w-14 bg-slate-900 text-slate-100 border border-slate-600 rounded-md py-1 px-2 text-center font-semibold outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all">
+                <label for="cantidad-{{ID}}">Cantidad:</label>
+                <input id="cantidad-{{ID}}" type="number" value="1" min="1" class="w-14 bg-slate-900 text-slate-100 border border-slate-600 rounded-md py-1 px-2 text-center font-semibold outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all">
             </div>
 
-            <a href="#" class="inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-950 hover:text-white font-bold text-sm py-2.5 px-4 rounded-lg shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transition-all duration-200">
+            <button type="button" class="inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-950 hover:text-white font-bold text-sm py-2.5 px-4 rounded-lg shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transition-all duration-200" onclick="agregarProductoCarrito({{ID}})">
                 🛒 Agregar al carrito
-            </a>
+            </button>
         </div>
     </div>
 </div>

@@ -1,0 +1,40 @@
+<section class="col-span-full w-full max-w-xl mx-auto flex flex-col gap-6">
+    <div class="border-b border-slate-800 pb-3">
+        <h2 class="text-2xl font-extrabold text-amber-400 tracking-tight">Procedi all'ordine · Fase 2</h2>
+        <p class="text-sm text-slate-400 mt-1">Inserisci i dati di pagamento</p>
+    </div>
+
+    <div class="flex flex-col gap-4 bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-2xl p-6 shadow-xl">
+        <label class="flex flex-col gap-1.5 text-sm font-semibold text-slate-300">
+            Tipo di carta
+            <select id="tipo_tarjeta" class="bg-slate-900 text-slate-100 placeholder-slate-600 border border-slate-600 rounded-md py-2 px-3 outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all">
+                <option value="0">Seleziona il tipo</option>
+                <option value="visa">VISA</option>
+                <option value="master_card">MASTER CARD</option>
+            </select>
+        </label>
+        <label class="flex flex-col gap-1.5 text-sm font-semibold text-slate-300">
+            Numero della carta
+            <input type="text" id="numero_tarjeta" class="bg-slate-900 text-slate-100 placeholder-slate-600 border border-slate-600 rounded-md py-2 px-3 outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"/>
+        </label>
+        <label class="flex flex-col gap-1.5 text-sm font-semibold text-slate-300">
+            Intestatario della carta
+            <input type="text" id="titular_tarjeta" class="bg-slate-900 text-slate-100 placeholder-slate-600 border border-slate-600 rounded-md py-2 px-3 outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"/>
+        </label>
+
+        <!-- Tipo de pago (booleano aPlazos) -->
+        <label class="flex items-center gap-3 bg-slate-900 border border-slate-600 hover:border-amber-500 rounded-md py-3 px-3 cursor-pointer select-none transition-colors">
+            <input type="checkbox" id="a_plazos" class="w-4 h-4 accent-amber-500 cursor-pointer"/>
+            <span class="text-sm font-semibold text-slate-300">
+                Paga a rate
+                <span class="block text-xs font-normal text-slate-500">Se non la selezioni, il pagamento sarà in un'unica soluzione.</span>
+            </span>
+        </label>
+    </div>
+
+    <div class="flex justify-end">
+        <button id="aceptar_paso_2" class="bg-amber-500 hover:bg-amber-600 text-slate-950 hover:text-white font-bold py-3 px-8 rounded-lg shadow-lg shadow-amber-500/20 transition-all duration-200 cursor-pointer">
+            Continua
+        </button>
+    </div>
+</section>

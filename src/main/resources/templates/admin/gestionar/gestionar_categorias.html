@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html th:lang="#{idioma.actual}" lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="#{titulo.gestion.categorias}">Gestión de Categorías - Administración</title>
+    <!-- CDN de Tailwind CSS v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased flex flex-col md:flex-row min-w-0 overflow-x-hidden">
+
+<!-- Inserción del fragmento de Menú Lateral -->
+<div th:insert="~{fragments/general.html :: menu}"></div>
+
+<!-- CONTENIDO PRINCIPAL -->
+<main class="flex-1 p-3 sm:p-6 md:p-8 flex flex-col gap-5 w-full max-w-6xl mx-auto min-w-0">
+
+    <!-- ENCABEZADO Y BOTÓN NUEVA CATEGORÍA -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-900/80 border border-slate-800 p-4 sm:p-5 rounded-2xl w-full min-w-0 shadow-lg">
+        <div class="min-w-0">
+            <h1 class="text-lg sm:text-2xl font-extrabold text-white tracking-tight flex items-center gap-2 truncate">
+                <span>🏷️</span> <span th:text="#{gestor.categorias}">Gestor de Categorías</span>
+            </h1>
+            <p th:text="#{gestor.categorias.sub}" class="text-slate-400 text-xs sm:text-sm mt-0.5">
+                Listado de categorías de relojes disponibles en la tienda.
+            </p>
+        </div>
+
+        <div class="w-full sm:w-auto">
+            <a th:href="@{/admin/registrarCategoria}" href="registrarCategoria"
+               class="inline-flex items-center justify-center gap-2 w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl shadow-lg shadow-amber-500/20 transition-all">
+                <span>➕</span> <span th:text="#{gestor.categorias.nueva}">Nueva categoría</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- BUSCADOR + TOTAL -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 w-full min-w-0">
+        <div class="relative flex-1 min-w-0 md:max-w-xl">
+            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm pointer-events-none">🔍</span>
+            <input id="buscador" type="text" th:placeholder="#{buscar.categorias}" placeholder="Buscar por nombre o descripción..."
+                   class="w-full bg-slate-900 border border-slate-800 focus:border-amber-500 focus:ring-1 focus:ring-amber-500/40 outline-none text-sm text-slate-100 placeholder-slate-500 rounded-xl pl-9 pr-3 py-2.5 transition-colors">
+        </div>
+
+        <span class="inline-flex items-center gap-1.5 self-start md:self-auto text-xs sm:text-sm text-slate-400 bg-slate-900 border border-slate-800 rounded-full px-3 py-1.5">
+            <span th:text="#{listado.total}">Total:</span>
+            <span id="contador" class="font-extrabold text-amber-400" th:text="${#lists.size(categorias)}">0</span>
+            <span th:text="#{listado.categorias}">categorías</span>
+        </span>
+    </div>
+
+    <!-- LISTA DE CATEGORÍAS (REJILLA) -->
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 w-full min-w-0">
+
+        <!-- TARJETA INDIVIDUAL POR CADA CATEGORÍA -->
+        <div th:each="cat : ${categorias}"
+             th:attr="data-buscar=${#strings.toLowerCase(cat.nombre + ' ' + cat.descripcion)}"
+             class="group bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-2xl p-4 flex flex-col gap-4 shadow-md hover:shadow-xl hover:shadow-black/30 transition-all w-full min-w-0">
+
+            <!-- Cabecera: icono + nombre + ID -->
+            <div class="flex items-center gap-4 min-w-0">
+                <div class="w-14 h-14 shrink-0 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-2xl">
+                    🏷️
+                </div>
+
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center justify-between gap-2">
+                        <h2 class="text-base sm:text-lg font-extrabold text-white truncate leading-tight" th:text="${cat.nombre}">Nombre Categoría</h2>
+                        <span class="shrink-0 text-[10px] font-bold uppercase tracking-wide bg-slate-800 text-slate-300 border border-slate-700 rounded-full px-2 py-0.5"
+                              th:text="'ID ' + ${cat.id}">ID 1</span>
+                    </div>
+                    <!-- Número de relojes asociados -->
+                    <span class="inline-flex items-center gap-1 mt-1 text-[11px] font-bold rounded-full px-2.5 py-0.5 border"
+                          th:classappend="${(cat.relojes != null ? cat.relojes.size() : 0) > 0} ? 'bg-amber-500/10 border-amber-500/40 text-amber-300' : 'bg-slate-800 border-slate-700 text-slate-400'">
+                        ⌚ <span th:text="${cat.relojes != null ? cat.relojes.size() : 0} + ' ' + #{contador.relojes}">0 relojes</span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Descripción -->
+            <div class="bg-slate-950/60 border border-slate-800/60 rounded-lg p-3 text-xs min-w-0">
+                <span th:text="#{campo.descripcion}" class="block text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Descripción</span>
+                <p class="text-slate-300 leading-relaxed mt-1 line-clamp-3"
+                   th:text="${cat.descripcion} ?: #{categoria.sin.descripcion}">Descripción de la categoría de relojes...</p>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="flex gap-2 w-full min-w-0 mt-auto">
+                <a th:text="#{accion.editar}" th:href="@{${ 'editarCategoria?id=' + cat.id }}"
+                   class="flex-1 inline-flex justify-center items-center gap-1.5 py-2 px-3 bg-sky-500/10 hover:bg-sky-500 text-sky-400 hover:text-slate-950 border border-sky-500/20 rounded-lg text-xs font-bold transition-all">
+                    ✏️ Editar
+                </a>
+                <a th:text="#{accion.borrar}" th:href="@{${ 'borrarCategoria?id=' + cat.id }}"
+                   th:attr="data-confirm=#{confirmar.borrar.categoria}" onclick="return confirm(this.dataset.confirm)"
+                   class="flex-1 inline-flex justify-center items-center gap-1.5 py-2 px-3 bg-rose-500/10 hover:bg-rose-600 text-rose-400 hover:text-white border border-rose-500/20 rounded-lg text-xs font-bold transition-all">
+                    🗑️ Borrar
+                </a>
+            </div>
+        </div>
+
+        <!-- MENSAJE LISTA VACÍA (no hay categorías en el sistema) -->
+        <div th:if="${#lists.isEmpty(categorias)}"
+             class="xl:col-span-2 bg-slate-900 border border-dashed border-slate-700 rounded-2xl p-10 text-center text-slate-500 w-full">
+            <p class="text-3xl mb-2">🏷️</p>
+            <p th:text="#{vacio.categorias}" class="text-sm font-semibold">No hay categorías registradas en el sistema.</p>
+        </div>
+
+        <!-- MENSAJE SIN RESULTADOS (la búsqueda no coincide) -->
+        <div id="sin-resultados" style="display:none"
+             class="xl:col-span-2 bg-slate-900 border border-dashed border-slate-700 rounded-2xl p-10 text-center text-slate-500 w-full">
+            <p class="text-3xl mb-2">🔍</p>
+            <p th:text="#{sinresultados.categorias}" class="text-sm font-semibold">Ninguna categoría coincide con la búsqueda.</p>
+        </div>
+    </div>
+
+</main>
+
+<script>
+    const buscador = document.getElementById('buscador');
+    const tarjetas = document.querySelectorAll('[data-buscar]');
+    const contador = document.getElementById('contador');
+    const sinResultados = document.getElementById('sin-resultados');
+
+    buscador.addEventListener('input', function () {
+        const texto = buscador.value.toLowerCase().trim();
+        let visibles = 0;
+        tarjetas.forEach(function (t) {
+            const coincide = t.getAttribute('data-buscar').indexOf(texto) !== -1;
+            t.style.display = coincide ? '' : 'none';
+            if (coincide) { visibles++; }
+        });
+        contador.textContent = visibles;
+        sinResultados.style.display = (visibles === 0 && tarjetas.length > 0) ? '' : 'none';
+    });
+</script>
+
+</body>
+</html>

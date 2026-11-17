@@ -1,0 +1,42 @@
+<section class="col-span-full w-full max-w-md mx-auto">
+    <div class="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-2xl p-8 shadow-xl">
+
+        <!-- Cabecera -->
+        <div class="text-center mb-8">
+            <span class="w-14 h-14 mx-auto flex items-center justify-center text-3xl rounded-xl bg-gradient-to-br from-amber-400/20 to-amber-600/5 border border-amber-500/40 shadow-lg shadow-amber-500/10">⌚</span>
+            <h2 class="font-display text-3xl font-bold text-amber-400 mt-4">Accedi</h2>
+            <p class="text-sm text-slate-400 mt-1">Accedi per aggiungere orologi al carrello</p>
+        </div>
+
+        <form id="form_login" class="flex flex-col gap-5">
+
+            <label class="flex flex-col gap-1.5 text-sm font-semibold text-slate-300">
+                Email
+                <input type="email" name="email" id="email" value="lorenzo@123"
+                       class="bg-slate-900 text-slate-100 border border-slate-600 rounded-md py-2.5 px-3 outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"/>
+            </label>
+
+            <label class="flex flex-col gap-1.5 text-sm font-semibold text-slate-300">
+                Password
+                <input type="password" name="pass" id="pass" value="123"
+                       class="bg-slate-900 text-slate-100 border border-slate-600 rounded-md py-2.5 px-3 outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"/>
+            </label>
+
+            <label class="flex items-center gap-2.5 text-sm text-slate-400 cursor-pointer select-none">
+                <input type="checkbox" id="redordar_pass"
+                       class="w-4 h-4 accent-amber-500 cursor-pointer"/>
+                Ricordami <span class="text-slate-600">(disponibile prossimamente...)</span>
+            </label>
+
+            <button type="submit"
+                    class="mt-2 w-full bg-amber-500 hover:bg-amber-600 text-slate-950 hover:text-white font-bold py-3 rounded-lg shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transition-all duration-200 cursor-pointer">
+                Accedi
+            </button>
+        </form>
+
+        <p class="text-center text-sm text-slate-500 mt-6">
+            Non hai ancora un account?
+            <span class="text-amber-400 font-semibold">Seleziona Registrati dal menu</span>
+        </p>
+    </div>
+</section>

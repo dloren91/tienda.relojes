@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Usuario - Panel de Administración</title>
+    <!-- CDN de Tailwind CSS v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased flex flex-col md:flex-row min-w-0 overflow-x-hidden">
+
+<!-- MENÚ LATERAL -->
+<div th:insert="fragments/general.html :: menu"></div>
+
+<!-- CONTENIDO PRINCIPAL -->
+<main class="flex-1 p-3 sm:p-6 md:p-8 flex flex-col gap-6 w-full max-w-3xl mx-auto min-w-0">
+
+    <!-- ENCABEZADO -->
+    <div class="bg-slate-900/80 border border-slate-800 p-4 sm:p-6 rounded-2xl w-full shadow-lg flex flex-col gap-1">
+        <h1 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight flex items-center gap-2">
+            <span>👤</span> Añadir Nuevo Usuario
+        </h1>
+        <p class="text-slate-400 text-xs sm:text-sm">
+            Introduce los datos del nuevo usuario para registrarlo en el sistema.
+        </p>
+    </div>
+
+    <!-- FORMULARIO -->
+    <form action="#" th:action="@{guardarUsuario}" th:object="${nuevo}" method="post"
+          class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-md flex flex-col gap-5">
+
+        <!-- Campo: Nombre -->
+        <div class="flex flex-col gap-1.5">
+            <label for="nombre" class="text-xs font-bold uppercase tracking-wider text-slate-300">
+                Nombre Completo <span class="text-amber-400">*</span>
+            </label>
+            <!-- Campo: Nombre -->
+            <input type="text" id="nombre" th:field="*{nombre}" placeholder="Ej. Juan Pérez"
+                   class="w-full bg-slate-950 border border-slate-800 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 rounded-xl px-3.5 py-2.5 text-sm text-slate-100">
+            <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"
+                  class="text-xs font-semibold text-rose-400 flex items-center gap-1 mt-0.5">
+            </span>
+        </div>
+
+        <!-- Fila de 2 campos: Email y Contraseña -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Campo: Email -->
+            <div class="flex flex-col gap-1.5">
+                <label for="email" class="text-xs font-bold uppercase tracking-wider text-slate-300">
+                    Correo Electrónico <span class="text-amber-400">*</span>
+                </label>
+                <input type="email" id="email" th:field="*{email}" placeholder="ejemplo@correo.com"
+                       class="w-full bg-slate-950 border border-slate-800 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-600 outline-none transition-colors">
+                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                      class="text-xs font-semibold text-rose-400 flex items-center gap-1 mt-0.5">
+                </span>
+            </div>
+
+            <!-- Campo: Contraseña (pass) -->
+            <div class="flex flex-col gap-1.5">
+                <label for="pass" class="text-xs font-bold uppercase tracking-wider text-slate-300">
+                    Contraseña <span class="text-amber-400">*</span>
+                </label>
+                <input type="password" id="pass" th:field="*{pass}" placeholder="••••••••"
+                       class="w-full bg-slate-950 border border-slate-800 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-600 outline-none transition-colors">
+                <span th:if="${#fields.hasErrors('pass')}" th:errors="*{pass}"
+                      class="text-xs font-semibold text-rose-400 flex items-center gap-1 mt-0.5">
+                </span>
+            </div>
+        </div>
+
+        <!-- Campo: Dirección -->
+        <div class="flex flex-col gap-1.5">
+            <label for="direccion" class="text-xs font-bold uppercase tracking-wider text-slate-300">
+                Dirección
+            </label>
+            <input type="text" id="direccion" th:field="*{direccion}" placeholder="Ej. Calle Mayor, 12, 3ºA"
+                   class="w-full bg-slate-950 border border-slate-800 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-600 outline-none transition-colors">
+            <span th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}"
+                  class="text-xs font-semibold text-rose-400 flex items-center gap-1 mt-0.5">
+            </span>
+        </div>
+
+        <!-- Campo: Cuenta Bancaria -->
+        <div class="flex flex-col gap-1.5">
+            <label for="cuentaBancaria" class="text-xs font-bold uppercase tracking-wider text-slate-300">
+                Cuenta Bancaria (IBAN)
+            </label>
+            <input type="text" id="cuentaBancaria" th:field="*{cuentaBancaria}" placeholder="Ej. ES12 3456 7890 1234 5678"
+                   class="w-full bg-slate-950 border border-slate-800 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-600 outline-none transition-colors font-mono">
+            <span th:if="${#fields.hasErrors('cuentaBancaria')}" th:errors="*{cuentaBancaria}"
+                  class="text-xs font-semibold text-rose-400 flex items-center gap-1 mt-0.5">
+            </span>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="flex items-center gap-3 pt-3 border-t border-slate-800">
+            <button type="submit"
+                    class="flex-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm py-2.5 px-4 rounded-xl shadow-lg shadow-amber-500/20 transition-all cursor-pointer text-center">
+                Guardar Usuario
+            </button>
+            <a th:href="@{/admin/gestionarUsuarios}" href="#"
+               class="py-2.5 px-4 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-sm rounded-xl border border-slate-700/50 transition-colors text-center">
+                Cancelar
+            </a>
+        </div>
+
+    </form>
+
+</main>
+
+</body>
+</html>

@@ -7,21 +7,36 @@ import org.springframework.web.multipart.MultipartFile;
 @Entity
 @Table(name = "tabla_relojes")
 public class Reloj {
+
+    // --- Atributos / Campos ---
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Size(min = 3,max = 40,message = "TITULO DEBE TENER ENTRE 3 Y 40 CARACTERES")
-    @NotEmpty(message = "DEBES INSERTAR UN TITULO")
-    @Pattern(regexp = "[a-záéíóúñA-ZÁÉÍÓÚÜü 0-9]+", message = "MODELO SOLO PUEDE TERNER LETRAS NUMEROS Y ESPACIOS")
+
+
+    @NotEmpty(message = "DEBES INSERTAR UN MODELO")
+    @Size(min = 3, max = 40, message = "MODELO DEBE TENER ENTRE 3 Y 40 CARACTERES")
+    @Pattern(regexp = "[a-záéíóúñA-ZÁÉÍÓÚÜü\\-:'& 0-9]+", message = "MODELO SOLO PUEDE TERNER LETRAS NUMEROS Y ESPACIOS")
+    @Column(name = "modelo_reloj",length = 300)
     private String modelo;
 
+    private String sku; //stock keeping unit // numero de control del producto
+
     @Min(value = 1, message = "PRECIO MINIMO 1 EURO")
-    @Max(value = 99999,message = "PRECIO MAXIMO ES 99999 EUROS")
+    @Max(value = 999999999, message = "PRECIO MAXIMO ES 999999999 EUROS")
     private double precio;
 
-    @NotNull(message = "DEBES RELLENAR EL CAMPO")
+    @NotBlank(message = "DEBES INSERTAR UN MARCA")
+    @Pattern(regexp = "[a-záéíóúñA-ZÁÉÍÓÚÜü\\-:'& 0-9]+", message = "MARCA SOLO PUEDE TERNER LETRAS NUMEROS Y ESPACIOS")
     private String marca;
+
+    @NotBlank(message = "DEBES INSERTAR UN MATERIAL")
+    @Pattern(regexp = "[a-záéíóúñA-ZÁÉÍÓÚÜü\\-:'& 0-9]+", message = "MATERIAL SOLO PUEDE TERNER LETRAS NUMEROS Y ESPACIOS")
     private String material;
+
+    @Min(value = 1, message = "RESISTENCIA MINIMA 0 METROS")
+    @Max(value = 999999999, message = "RESISTENCIA MAXIMA ES 999999999 METROS")
     private int resistenciaAgua;
     private boolean automatico;
 
@@ -30,6 +45,24 @@ public class Reloj {
 
     @Lob
     private byte[] imagenPortada;
+
+//    @Lob
+//    private byte[] imagenDetalles;
+
+    @NotNull(message = "DEBES SELECCIONAR UNA CATEGORÍA")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    private Categoria categoria;
+
+
+
+    //para gestionar la id del from y para otros usos
+    @Transient
+    private int idCategoria;
+
+    // --- Constructores ---
+
+    public Reloj() {
+    }
 
     public Reloj(String modelo, double precio, String marca, String material, int resistenciaAgua, boolean automatico) {
         this.modelo = modelo;
@@ -40,8 +73,7 @@ public class Reloj {
         this.automatico = automatico;
     }
 
-    public Reloj() {
-    }
+    // --- Getters y Setters ---
 
     public long getId() {
         return id;
@@ -57,6 +89,14 @@ public class Reloj {
 
     public void setModelo(String modelo) {
         this.modelo = modelo;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 
     public double getPrecio() {
@@ -113,5 +153,21 @@ public class Reloj {
 
     public void setImagenPortada(byte[] imagenPortada) {
         this.imagenPortada = imagenPortada;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
     }
 }

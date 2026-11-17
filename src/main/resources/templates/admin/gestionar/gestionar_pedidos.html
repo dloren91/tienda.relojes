@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html th:lang="#{idioma.actual}" lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="#{titulo.gestion.pedidos}">Gestión de Pedidos - Administración</title>
+    <!-- CDN de Tailwind CSS v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased flex flex-col md:flex-row min-w-0 overflow-x-hidden">
+
+<div th:insert="~{fragments/general.html :: menu}"></div>
+
+<!-- CONTENIDO PRINCIPAL -->
+<main class="flex-1 p-3 sm:p-6 md:p-8 flex flex-col gap-5 w-full max-w-6xl mx-auto min-w-0">
+
+    <!-- ENCABEZADO -->
+    <div class="bg-slate-900/80 border border-slate-800 p-4 sm:p-5 rounded-2xl w-full min-w-0 shadow-lg">
+        <h1 class="text-lg sm:text-2xl font-extrabold text-white tracking-tight flex items-center gap-2">
+            <span>📋</span> <span th:text="#{gestor.pedidos}">Gestor de Pedidos</span>
+        </h1>
+        <p th:text="#{gestor.pedidos.sub}" class="text-slate-400 text-xs sm:text-sm mt-0.5">
+            Listado de pedidos realizados por los clientes.
+        </p>
+    </div>
+
+    <!-- BUSCADOR + TOTAL -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 w-full min-w-0">
+        <div class="relative flex-1 min-w-0 md:max-w-xl">
+            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm pointer-events-none">🔍</span>
+            <input id="buscador" type="text" th:placeholder="#{buscar.pedidos}" placeholder="Buscar por nº de pedido, cliente, email o dirección..."
+                   class="w-full bg-slate-900 border border-slate-800 focus:border-amber-500 focus:ring-1 focus:ring-amber-500/40 outline-none text-sm text-slate-100 placeholder-slate-500 rounded-xl pl-9 pr-3 py-2.5 transition-colors">
+        </div>
+
+        <span class="inline-flex items-center gap-1.5 self-start md:self-auto text-xs sm:text-sm text-slate-400 bg-slate-900 border border-slate-800 rounded-full px-3 py-1.5">
+            <span th:text="#{listado.total}">Total:</span>
+            <span id="contador" class="font-extrabold text-amber-400" th:text="${#lists.size(pedidos)}">0</span>
+            <span th:text="#{listado.pedidos}">pedidos</span>
+        </span>
+    </div>
+
+    <!-- FILTROS POR ESTADO -->
+    <div class="flex flex-wrap gap-2">
+        <button th:text="#{pedido.filtro.todos}" type="button" data-filtro="todos">Todos</button>
+        <button th:text="#{pedido.estado.EnProceso}" type="button" data-filtro="EnProceso">En proceso</button>
+        <button th:text="#{pedido.estado.Enviado}" type="button" data-filtro="Enviado">Enviado</button>
+        <button th:text="#{pedido.estado.Completado}" type="button" data-filtro="Completado">Completado</button>
+        <button th:text="#{pedido.estado.Incidencia}" type="button" data-filtro="Incidencia">Incidencia</button>
+    </div>
+
+    <!-- LISTA DE PEDIDOS -->
+    <div class="flex flex-col gap-3 w-full min-w-0">
+
+        <!-- Sin pedidos en el sistema -->
+        <div th:if="${#lists.isEmpty(pedidos)}"
+             class="bg-slate-900 border border-dashed border-slate-700 rounded-2xl p-10 text-center text-slate-500 w-full">
+            <p class="text-3xl mb-2">📋</p>
+            <p th:text="#{vacio.pedidos}" class="text-sm font-semibold">Todavía no hay ningún pedido.</p>
+        </div>
+
+        <!-- TARJETA POR CADA PEDIDO -->
+        <div th:each="p : ${pedidos}"
+             th:attr="data-buscar=${#strings.toLowerCase(p.id + ' ' + p.nombreCompleto + ' ' + p.direccion + ' ' + p.provincia + ' ' + (p.usuario != null ? p.usuario.email : ''))},data-estado=${p.estado}"
+             class="group bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-2xl p-4 flex flex-col lg:flex-row lg:items-center gap-4 shadow-md hover:shadow-xl hover:shadow-black/30 transition-all w-full min-w-0">
+
+            <!-- Número de pedido -->
+            <div class="w-16 h-16 shrink-0 flex flex-col items-center justify-center bg-slate-950 border border-slate-800 rounded-xl">
+                <span th:text="#{pedido.etiqueta}" class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Pedido</span>
+                <span class="text-xl font-black text-amber-400 leading-none" th:text="'#' + ${p.id}">#1</span>
+            </div>
+
+            <!-- Datos del cliente y envío -->
+            <div class="flex-1 min-w-0 flex flex-col gap-1">
+                <h2 class="text-base sm:text-lg font-extrabold text-white truncate leading-tight" th:text="${p.nombreCompleto}">Nombre completo</h2>
+
+                <p th:if="${p.usuario != null}" class="text-xs text-slate-500 truncate flex items-center gap-1.5">
+                    <span>✉️</span>
+                    <span class="truncate" th:text="${p.usuario.email}">cliente@email.com</span>
+                </p>
+
+                <p class="text-xs sm:text-sm text-slate-400 flex items-start gap-1.5">
+                    <span>📍</span>
+                    <span>
+                        <span th:text="${p.direccion}">Dirección</span>,
+                        <span th:text="${p.codigoPostal}">28035</span>
+                        (<span th:text="${p.provincia}">Provincia</span>)
+                    </span>
+                </p>
+
+                <div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-0.5">
+                    <p th:if="${p.telefono != null and !#strings.isEmpty(p.telefono)}"
+                       class="text-xs text-slate-400 flex items-center gap-1.5">
+                        <span>📞</span>
+                        <span th:text="${p.telefono}">616111426</span>
+                    </p>
+
+                    <p class="text-xs text-slate-400 flex items-center gap-1.5">
+                        <span>⌚</span>
+                        <span th:text="${p.productosPedido != null ? #lists.size(p.productosPedido) : 0} + ' ' + #{contador.productos}">0 productos</span>
+                    </p>
+                </div>
+
+                <p th:if="${p.observaciones != null and !#strings.isEmpty(p.observaciones)}"
+                   class="text-xs text-amber-400/90 italic truncate flex items-center gap-1.5 mt-0.5">
+                    <span>📝</span>
+                    <span class="truncate" th:text="${p.observaciones}">Nota de entrega</span>
+                </p>
+            </div>
+
+            <!-- Estado (con color según el estado) -->
+            <span class="inline-flex items-center self-start lg:self-center px-3 py-1 rounded-full text-xs font-bold border whitespace-nowrap"
+                  th:classappend="${p.estado == 'Completado' ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-300' : (p.estado == 'Enviado' ? 'bg-sky-500/10 border-sky-500/40 text-sky-300' : (p.estado == 'Incidencia' ? 'bg-rose-500/10 border-rose-500/40 text-rose-300' : 'bg-amber-500/10 border-amber-500/40 text-amber-300'))}"
+                  th:text="#{'pedido.estado.' + ${p.estado}}">estado</span>
+
+            <!-- Acción -->
+            <a th:href="@{ ${ 'verDetallesPedido?id=' + p.id } }"
+               class="inline-flex items-center justify-center gap-2 bg-slate-800 hover:bg-amber-500 text-slate-200 hover:text-slate-950 font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-700 hover:border-amber-500 transition-colors whitespace-nowrap">
+                <span th:text="#{accion.ver.detalles}">Ver detalles</span> <span>→</span>
+            </a>
+        </div>
+
+        <!-- MENSAJE SIN RESULTADOS (la búsqueda o el filtro no coinciden) -->
+        <div id="sin-resultados" style="display:none"
+             class="bg-slate-900 border border-dashed border-slate-700 rounded-2xl p-10 text-center text-slate-500 w-full">
+            <p class="text-3xl mb-2">🔍</p>
+            <p th:text="#{sinresultados.pedidos}" class="text-sm font-semibold">Ningún pedido coincide con la búsqueda.</p>
+        </div>
+    </div>
+</main>
+
+<script>
+    const buscador = document.getElementById('buscador');
+    const tarjetas = document.querySelectorAll('[data-buscar]');
+    const chips = document.querySelectorAll('[data-filtro]');
+    const contador = document.getElementById('contador');
+    const sinResultados = document.getElementById('sin-resultados');
+
+    const claseBase = 'px-4 py-1.5 rounded-full text-xs font-bold border transition-colors cursor-pointer';
+    const claseActiva = 'bg-amber-500 text-slate-950 border-amber-500';
+    const claseInactiva = 'bg-slate-900 text-slate-300 border-slate-700 hover:border-amber-500/60 hover:text-amber-400';
+
+    let estadoActivo = 'todos';
+
+    function aplicarFiltros() {
+        const texto = buscador.value.toLowerCase().trim();
+        let visibles = 0;
+
+        tarjetas.forEach(function (t) {
+            const okTexto = t.getAttribute('data-buscar').indexOf(texto) !== -1;
+            const okEstado = (estadoActivo === 'todos') ? true : (t.getAttribute('data-estado') === estadoActivo);
+            const mostrar = okTexto ? okEstado : false;
+            t.style.display = mostrar ? '' : 'none';
+            if (mostrar) { visibles++; }
+        });
+
+        contador.textContent = visibles;
+        sinResultados.style.display = (visibles === 0 && tarjetas.length > 0) ? '' : 'none';
+
+        chips.forEach(function (c) {
+            const activo = c.getAttribute('data-filtro') === estadoActivo;
+            c.className = claseBase + ' ' + (activo ? claseActiva : claseInactiva);
+        });
+    }
+
+    buscador.addEventListener('input', aplicarFiltros);
+
+    chips.forEach(function (c) {
+        c.addEventListener('click', function () {
+            estadoActivo = c.getAttribute('data-filtro');
+            aplicarFiltros();
+        });
+    });
+
+    aplicarFiltros();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del pedido - Administración</title>
+    <!-- CDN de Tailwind CSS v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased flex flex-col md:flex-row min-w-0 overflow-x-hidden">
+
+<div th:insert="~{fragments/general.html :: menu}"></div>
+
+<!-- CONTENIDO PRINCIPAL -->
+<main class="flex-1 p-3 sm:p-6 md:p-8 flex flex-col gap-4 w-full max-w-5xl mx-auto min-w-0">
+
+    <!-- ENCABEZADO -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-900/80 border border-slate-800 p-4 rounded-2xl w-full min-w-0 shadow-lg">
+        <div class="min-w-0">
+            <h1 class="text-lg sm:text-2xl font-extrabold text-white tracking-tight flex items-center gap-2">
+                <span>📋</span> Detalles del pedido
+                <span class="text-amber-400" th:text="'#' + ${pedido.id}">#1</span>
+            </h1>
+            <p class="text-slate-400 text-xs sm:text-sm mt-0.5">
+                Datos de envío, pago, cuestionario y productos.
+            </p>
+        </div>
+        <a th:href="@{/admin/gestionarPedidos}" href="gestionarPedidos"
+           class="inline-flex items-center justify-center gap-2 bg-slate-800 hover:bg-amber-500 text-slate-200 hover:text-slate-950 font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-700 hover:border-amber-500 transition-colors">
+            <span>←</span> Volver a pedidos
+        </a>
+    </div>
+
+    <!-- DATOS DE ENVÍO Y DE PAGO -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full min-w-0">
+
+        <!-- Envío -->
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-md min-w-0">
+            <h2 class="text-sm font-extrabold text-amber-400 uppercase tracking-wider flex items-center gap-2 border-b border-slate-800/80 pb-3 mb-3">
+                <span>📦</span> Datos de envío
+            </h2>
+            <div class="flex flex-col gap-1.5 text-xs bg-slate-950/60 p-2.5 rounded-lg border border-slate-800/60">
+                <div class="flex justify-between items-center gap-2">
+                    <span class="text-slate-400 font-medium shrink-0">Nombre completo:</span>
+                    <span class="text-slate-200 font-semibold truncate text-right" th:text="${pedido.nombreCompleto}">Nombre</span>
+                </div>
+                <div class="flex justify-between items-center gap-2 border-t border-slate-800/40 pt-1.5">
+                    <span class="text-slate-400 font-medium shrink-0">Dirección:</span>
+                    <span class="text-slate-200 font-semibold truncate text-right" th:text="${pedido.direccion}">Dirección</span>
+                </div>
+                <!-- Código Postal -->
+                <div class="flex justify-between items-center gap-2 border-t border-slate-800/40 pt-1.5">
+                    <span class="text-slate-400 font-medium shrink-0">Código Postal:</span>
+                    <span class="text-slate-200 font-semibold truncate text-right" th:text="${pedido.codigoPostal}">28035</span>
+                </div>
+                <div class="flex justify-between items-center gap-2 border-t border-slate-800/40 pt-1.5">
+                    <span class="text-slate-400 font-medium shrink-0">Provincia:</span>
+                    <span class="text-slate-200 font-semibold truncate text-right" th:text="${pedido.provincia}">Provincia</span>
+                </div>
+                <!-- Teléfono -->
+                <div class="flex justify-between items-center gap-2 border-t border-slate-800/40 pt-1.5"
+                     th:if="${pedido.telefono != null and !#strings.isEmpty(pedido.telefono)}">
+                    <span class="text-slate-400 font-medium shrink-0">Teléfono:</span>
+                    <span class="text-slate-200 font-semibold truncate text-right" th:text="${pedido.telefono}">616111426</span>
+                </div>
+                <!-- Observaciones -->
+                <div class="flex justify-between items-start gap-2 border-t border-slate-800/40 pt-1.5"
+                     th:if="${pedido.observaciones != null and !#strings.isEmpty(pedido.observaciones)}">
+                    <span class="text-slate-400 font-medium shrink-0">Observaciones:</span>
+                    <span class="text-amber-400/90 italic text-right font-normal leading-snug" th:text="${pedido.observaciones}">Nota de entrega</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pago -->
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-md min-w-0">
+            <h2 class="text-sm font-extrabold text-amber-400 uppercase tracking-wider flex items-center gap-2 border-b border-slate-800/80 pb-3 mb-3">
+                <span>💳</span> Datos de pago
+            </h2>
+            <div class="flex flex-col gap-1.5 text-xs bg-slate-950/60 p-2.5 rounded-lg border border-slate-800/60">
+                <div class="flex justify-between items-center gap-2">
+                    <span class="text-slate-400 font-medium shrink-0">Tipo de tarjeta:</span>
+                    <span class="text-slate-200 font-semibold uppercase text-right" th:text="${pedido.tipoTarjeta}">VISA</span>
+                </div>
+                <div class="flex justify-between items-center gap-2 border-t border-slate-800/40 pt-1.5">
+                    <span class="text-slate-400 font-medium shrink-0">Titular:</span>
+                    <span class="text-slate-200 font-semibold truncate text-right" th:text="${pedido.titularTarjeta}">Titular</span>
+                </div>
+                <div class="flex justify-between items-center gap-2 border-t border-slate-800/40 pt-1.5">
+                    <span class="text-slate-400 font-medium shrink-0">Número de tarjeta:</span>
+                    <span class="text-slate-200 font-semibold tracking-wider text-right"
+                          th:text="${#strings.length(pedido.numeroTarjeta) > 4
+                            ? '•••• ' + #strings.substring(pedido.numeroTarjeta, #strings.length(pedido.numeroTarjeta) - 4)
+                            : pedido.numeroTarjeta}">•••• 1234</span>
+                </div>
+
+                <!-- Indicador de Pago a Plazos -->
+                <div class="flex justify-between items-center gap-2 border-t border-slate-800/40 pt-1.5">
+                    <span class="text-slate-400 font-medium shrink-0">Pago a plazos:</span>
+                    <span th:if="${pedido.aPlazos}"
+                          class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+                        <span>✓</span> Sí (Financiado)
+                    </span>
+                    <span th:unless="${pedido.aPlazos}"
+                          class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-slate-800 border border-slate-700 text-slate-400">
+                        <span>✕</span> No (Pago único)
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESPUESTAS DEL PASO 3 (CUESTIONARIO DEL CLIENTE) -->
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-md w-full min-w-0">
+        <h2 class="text-sm font-extrabold text-amber-400 uppercase tracking-wider flex items-center gap-2 border-b border-slate-800/80 pb-3 mb-3">
+            <span>💬</span> Respuestas del cuestionario
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+
+            <!-- Pregunta 1 -->
+            <div class="bg-slate-950/60 p-3 rounded-lg border border-slate-800/60 flex flex-col gap-1">
+                <span class="text-slate-400 font-medium flex items-center gap-1.5">
+                    <span>⌚</span> ¿Cuál fue el último reloj que te compraste?
+                </span>
+                <span class="text-white font-semibold text-sm mt-0.5"
+                      th:text="${pedido.resPregunta1 != null and !#strings.isEmpty(pedido.resPregunta1) ? pedido.resPregunta1 : 'Sin respuesta'}">
+                    Reloj verde de Ben 10
+                </span>
+            </div>
+
+            <!-- Pregunta 2 -->
+            <div class="bg-slate-950/60 p-3 rounded-lg border border-slate-800/60 flex flex-col gap-1">
+                <span class="text-slate-400 font-medium flex items-center gap-1.5">
+                    <span>✨</span> ¿Cuánto te costó?
+                </span>
+                <span class="text-amber-300 font-semibold text-sm mt-0.5"
+                      th:text="${pedido.resPregunta2 != null and !#strings.isEmpty(pedido.resPregunta2) ? pedido.resPregunta2 : 'Sin respuesta'}">
+                    Graff Diamonds Hallucination
+                </span>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- PRODUCTOS DEL PEDIDO -->
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-md w-full min-w-0">
+        <h2 class="text-sm font-extrabold text-amber-400 uppercase tracking-wider flex items-center gap-2 border-b border-slate-800/80 pb-3 mb-3">
+            <span>⌚</span> Productos del pedido
+        </h2>
+
+        <div class="flex flex-col gap-3">
+            <div th:each="productoPedido : ${pedido.productosPedido}"
+                 class="flex items-center gap-3 bg-slate-950/60 border border-slate-800/60 rounded-lg p-3 min-w-0">
+
+                <!-- Miniatura -->
+                <div class="w-14 h-14 shrink-0 bg-slate-950 border border-slate-800 rounded-lg flex items-center justify-center p-1">
+                    <img th:src="@{${ '../mostrar_imagen?id=' + productoPedido.reloj.id }}" alt="Reloj"
+                         class="max-h-full max-w-full object-contain">
+                </div>
+
+                <!-- Modelo y precio por unidad -->
+                <div class="flex-1 min-w-0">
+                    <h3 class="text-sm sm:text-base font-extrabold text-white truncate" th:text="${productoPedido.reloj.modelo}">Modelo</h3>
+                    <p class="text-xs text-slate-400 mt-0.5">
+                        <span th:text="${productoPedido.reloj.precio}">0.00</span> € / unidad
+                    </p>
+                </div>
+
+                <!-- Cantidad y subtotal -->
+                <div class="text-right shrink-0">
+                    <span class="text-xs text-slate-400 block">
+                        Cantidad: <span class="text-slate-200 font-bold" th:text="${productoPedido.cantidad}">1</span>
+                    </span>
+                    <span class="text-base font-black text-amber-400">
+                        <span th:text="${#numbers.formatDecimal(productoPedido.reloj.precio * productoPedido.cantidad, 1, 2)}">0.00</span> €
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total -->
+        <div class="flex justify-end items-center gap-3 border-t border-slate-800/80 mt-4 pt-4">
+            <span class="text-sm text-slate-400 font-semibold">Total del pedido:</span>
+            <span class="text-xl font-black text-amber-400">
+                <span th:text="${#numbers.formatDecimal(#aggregates.sum(pedido.productosPedido.![reloj.precio * cantidad]), 1, 2)}">0.00</span> €
+            </span>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-<div th:fragment="menu" class="w-full md:w-64 bg-slate-900 border-r border-slate-800 flex-shrink-0 flex flex-col justify-between min-h-screen">
+<div th:fragment="menu" class="sticky top-0 left-0 h-screen overflow-y-auto w-full md:w-64 bg-slate-900 border-r border-slate-800 flex-shrink-0 flex flex-col justify-between z-40">
     <div>
         <!-- Logo / Marca -->
         <div class="p-6 border-b border-slate-800/80 flex items-center gap-3">
@@ -7,10 +7,17 @@
                 <h1 class="text-lg font-black tracking-widest text-amber-400 uppercase leading-none">
                     Lorenzo
                 </h1>
-                <span class="text-[10px] font-semibold text-slate-400 tracking-wider block mt-1 uppercase">
-                    Admin Panel
+                <span class="text-[10px] font-semibold text-slate-400 tracking-wider block mt-1 uppercase" th:text="#{panel.administracion}">
+                    Panel de administracion
                 </span>
             </div>
+        </div>
+
+
+        <div class="flex justify-center items-center gap-2 pt-6">
+            <a href="?idioma=es" class="px-3 py-1 text-xs font-medium rounded-full border border-amber-500/30 bg-slate-900/60 text-slate-300 hover:text-amber-400 hover:border-amber-400/80 transition-all shadow-sm">Español</a>
+            <a href="?idioma=en" class="px-3 py-1 text-xs font-medium rounded-full border border-amber-500/30 bg-slate-900/60 text-slate-300 hover:text-amber-400 hover:border-amber-400/80 transition-all shadow-sm">English</a>
+            <a href="?idioma=it" class="px-3 py-1 text-xs font-medium rounded-full border border-amber-500/30 bg-slate-900/60 text-slate-300 hover:text-amber-400 hover:border-amber-400/80 transition-all shadow-sm">Italiano</a>
         </div>
 
         <!-- Enlaces de navegación -->
@@ -18,34 +25,41 @@
             <a th:href="@{/admin/gestionarRelojes}" href="gestionarRelojes"
                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-amber-400 transition-colors">
                 <span class="text-base">📦</span>
-                <span>Gestionar Relojes</span>
+                <span  th:text="#{gestion.relojes}">Gestionar Relojes</span>
             </a>
 
-            <a th:href="@{/admin/gestionarUsuarios}" href="#"
+            <a th:href="@{/admin/gestionarUsuarios}" href="gestionarUsuarios"
                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-amber-400 transition-colors">
                 <span class="text-base">👥</span>
-                <span>Gestionar Usuarios</span>
+                <span  th:text="#{gestion.usuarios}">Gestionar Usuarios</span>
             </a>
 
-            <a th:href="@{/admin/gestionarCategorias}" href="#"
+            <a th:href="@{/admin/gestionarCategorias}" href="gestionarCategorias"
                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-amber-400 transition-colors">
                 <span class="text-base">🏷️</span>
-                <span>Gestionar Categorías</span>
+                <span  th:text="#{gestion.categorias}">Gestionar Categorías</span>
             </a>
 
-            <a th:href="@{/admin/gestionarPedidos}" href="#"
+            <a th:href="@{/admin/gestionarPedidos}" href="gestionarPedidos"
                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-amber-400 transition-colors">
                 <span class="text-base">📋</span>
-                <span>Gestionar Pedidos</span>
+                <span  th:text="#{gestion.pedidos}">Gestionar Pedidos</span>
+            </a>
+
+            <a th:href="@{/admin/cerrarSesion}" href="cerrarSesion"
+               class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-amber-400 transition-colors">
+                <span class="text-base">📋</span>
+                <span th:text="#{cerrar.sesion}">Cerrar Sesion</span>
             </a>
         </nav>
     </div>
 
     <!-- Botón Volver a la Tienda (Pie del sidebar) -->
     <div class="p-4 border-t border-slate-800/80">
-        <a th:href="@{/}" href="../"
-           class="flex items-center justify-center gap-2 w-full py-2.5 px-4 text-xs font-bold text-slate-300 bg-slate-800/60 hover:bg-slate-800 border border-slate-700/50 hover:text-amber-400 rounded-xl transition-colors">
-            <span>←</span> Volver a la Tienda
+        <a  href="http://localhost:8080/"
+            class="flex items-center justify-center gap-2 w-full py-2.5 px-4 text-xs font-bold text-slate-300 bg-slate-800/60 hover:bg-slate-800 border border-slate-700/50 hover:text-amber-400 rounded-xl transition-colors"
+        >
+            <span>←</span> <span th:text="#{volver.tienda}">Volver a la Tienda</span>
         </a>
     </div>
 </div>

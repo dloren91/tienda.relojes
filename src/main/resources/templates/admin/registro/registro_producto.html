@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Producto - Panel de Administración</title>
+    <!-- CDN de Tailwind CSS v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased flex flex-col md:flex-row min-w-0 overflow-x-hidden">
+
+<!-- MENÚ LATERAL -->
+<div th:insert="fragments/general.html :: menu"></div>
+
+<!-- CONTENIDO PRINCIPAL -->
+<main class="flex-1 p-3 sm:p-6 md:p-8 flex flex-col gap-6 w-full max-w-3xl mx-auto min-w-0">
+
+    <!-- ENCABEZADO -->
+    <div class="bg-slate-900/80 border border-slate-800 p-4 sm:p-6 rounded-2xl w-full shadow-lg flex flex-col gap-1">
+        <h1 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight flex items-center gap-2">
+            <span>➕</span> Añadir Nuevo Producto
+        </h1>
+        <p class="text-slate-400 text-xs sm:text-sm">
+            Introduce los datos del nuevo reloj para registrarlo en el catálogo.
+        </p>
+    </div>
+
+    <!-- FORMULARIO -->
+    <form action="#" th:action="@{guardarReloj}" th:object="${nuevo}" method="post" enctype="multipart/form-data"
+          class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-md flex flex-col gap-5">
+
+        <!-- Campo: Modelo -->
+        <div class="flex flex-col gap-1.5">
+            <label for="modelo" class="text-xs font-bold uppercase tracking-wider text-slate-300">
+                Modelo <span class="text-amber-400">*</span>
+            </label>
+            <input type="text" id="modelo" th:field="*{modelo}" placeholder="Ej. Submariner Date"
+                   class="w-full bg-slate-950 border border-slate-800 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-600 outline-none transition-colors">
+            <span th:if="${#fields.hasErrors('modelo')}" th:errors="*{modelo}"
+                  class="text-xs font-semibold text-rose-400 flex items-center gap-1 mt-0.5">
+            </span>
+        </div>
+
+        <!-- Fila de 2 campos: Marca y Precio -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Campo: Marca -->
+            <div class="flex flex-col gap-1.5">
+                <label for="marca" class="text-xs font-bold uppercase tracking-wider text-slate-300">
+                    Marca <span class="text-amber-400">*</span>
+                </label>
+                <input type="text" id="marca" th:field="*{marca}" placeholder="Ej. Rolex"
+                       class="w-full bg-slate-950 border border-slate-800 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-600 outline-none transition-colors">
+                <span th:if="${#fields.hasErrors('marca')}" th:errors="*{marca}"
+                      class="text-xs font-semibold text-rose-400 flex items-center gap-1 mt-0.5">
+                </span>
+            </div>
+
+            <!-- Campo: Precio -->
+            <div class="flex flex-col gap-1.5">
+                <label for="precio" class="text-xs font-bold uppercase tracking-wider text-slate-300">
+                    Precio (€) <span class="text-amber-400">*</span>
+                </label>
+                <input type="number" step="0.01" id="precio" th:field="*{precio}" placeholder="0.00"
+                       class="w-full bg-slate-950 border border-slate-800 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-600 outline-none transition-colors">
+                <span th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}"
+                      class="text-xs font-semibold text-rose-400 flex items-center gap-1 mt-0.5">
+                </span>
+            </div>
+        </div>
+
+        <!-- Campo: Categoría -->
+        <div class="flex flex-col gap-1.5">
+            <label for="idCategoria" class="text-xs font-bold uppercase tracking-wider text-slate-300">
+                Categoría <span class="text-amber-400">*</span>
+            </label>
+            <select id="idCategoria" th:field="*{idCategoria}"
+                    class="w-full bg-slate-950 border border-slate-800 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 outline-none transition-colors cursor-pointer">
+                <option th:each="c : ${categorias}"
+                        th:value="${c.id}"
+                        th:text="${c.nombre}"
+                        class="bg-slate-900 text-slate-100"></option>
+            </select>
+            <span th:if="${#fields.hasErrors('idCategoria')}" th:errors="*{idCategoria}"
+                  class="text-xs font-semibold text-rose-400 flex items-center gap-1 mt-0.5">
+            </span>
+        </div>
+
+        <!-- Fila de 2 campos: Material y Resistencia al agua -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Campo: Material -->
+            <div class="flex flex-col gap-1.5">
+                <label for="material" class="text-xs font-bold uppercase tracking-wider text-slate-300">
+                    Material
+                </label>
+                <input type="text" id="material" th:field="*{material}" placeholder="Ej. Acero Inoxidable"
+                       class="w-full bg-slate-950 border border-slate-800 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-600 outline-none transition-colors">
+                <span th:if="${#fields.hasErrors('material')}" th:errors="*{material}" class="text-xs font-bold text-red-500 uppercase"></span>
+            </div>
+
+            <!-- Campo: Resistencia al agua -->
+            <div class="flex flex-col gap-1.5">
+                <label for="resistenciaAgua" class="text-xs font-bold uppercase tracking-wider text-slate-300">
+                    Resistencia al Agua (m)
+                </label>
+                <input type="number" id="resistenciaAgua" th:field="*{resistenciaAgua}" placeholder="Ej. 100"
+                       class="w-full bg-slate-950 border border-slate-800 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-600 outline-none transition-colors">
+                <span th:if="${#fields.hasErrors('resistenciaAgua')}" th:errors="*{resistenciaAgua}" class="text-xs font-bold text-red-500 uppercase"></span>
+            </div>
+        </div>
+
+        <!-- Campo: Checkbox Automático -->
+        <div class="flex items-center gap-3 bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+            <input type="checkbox" id="automatico" th:field="*{automatico}"
+                   class="w-4 h-4 rounded border-slate-700 bg-slate-900 text-amber-500 focus:ring-amber-400 accent-amber-500 cursor-pointer">
+            <label for="automatico" class="text-xs font-bold uppercase tracking-wider text-slate-300 cursor-pointer select-none">
+                ¿Es un reloj automático?
+            </label>
+        </div>
+
+        <!-- Campo: Subir Imagen -->
+        <div class="flex flex-col gap-1.5">
+            <label for="fotoSubida" class="text-xs font-bold uppercase tracking-wider text-slate-300">
+                Imagen del Producto
+            </label>
+            <input type="file" id="fotoSubida" th:field="*{fotoSubida}"
+                   class="block w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-slate-800 file:text-amber-400 hover:file:bg-slate-700 file:cursor-pointer transition-all border border-slate-800 bg-slate-950 rounded-xl p-1.5">
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="flex items-center gap-3 pt-3 border-t border-slate-800">
+            <button type="submit"
+                    class="flex-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm py-2.5 px-4 rounded-xl shadow-lg shadow-amber-500/20 transition-all cursor-pointer text-center">
+                Guardar Producto
+            </button>
+            <a th:href="@{/admin/gestionarRelojes}" href="#"
+               class="py-2.5 px-4 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-sm rounded-xl border border-slate-700/50 transition-colors text-center">
+                Cancelar
+            </a>
+        </div>
+
+    </form>
+
+</main>
+
+</body>
+</html>

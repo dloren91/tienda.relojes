@@ -1,0 +1,55 @@
+<section class="col-span-full w-full max-w-md mx-auto">
+    <div class="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-2xl p-8 shadow-xl">
+
+        <!-- Encabezado -->
+        <div class="text-center mb-8">
+            <span class="w-14 h-14 mx-auto flex items-center justify-center text-3xl rounded-xl bg-gradient-to-br from-amber-400/20 to-amber-600/5 border border-amber-500/40 shadow-lg shadow-amber-500/10">⌚</span>
+            <h2 class="font-display text-3xl font-bold text-amber-400 mt-4">Crea tu cuenta</h2>
+            <p class="text-sm text-slate-400 mt-1">Introduce tus datos para registrarte</p>
+        </div>
+
+        <!-- Formulario -->
+        <form id="form_registro_usuario" class="flex flex-col gap-5">
+
+            <label class="flex flex-col gap-1.5 text-sm font-semibold text-slate-300">
+                Nombre completo
+                <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez" required
+                       class="bg-slate-900 text-slate-100 placeholder-slate-600 border border-slate-600 rounded-md py-2.5 px-3 outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"/>
+            </label>
+
+            <label class="flex flex-col gap-1.5 text-sm font-semibold text-slate-300">
+                Correo electrónico
+                <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required
+                       class="bg-slate-900 text-slate-100 placeholder-slate-600 border border-slate-600 rounded-md py-2.5 px-3 outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"/>
+            </label>
+
+            <label class="flex flex-col gap-1.5 text-sm font-semibold text-slate-300">
+                Contraseña
+                <input type="password" id="pass" name="pass" placeholder="••••••••" required
+                       class="bg-slate-900 text-slate-100 placeholder-slate-600 border border-slate-600 rounded-md py-2.5 px-3 outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"/>
+            </label>
+
+            <label class="flex flex-col gap-1.5 text-sm font-semibold text-slate-300">
+                Dirección de envío
+                <input type="text" id="direccion" name="direccion" placeholder="Calle, número, piso, ciudad"
+                       class="bg-slate-900 text-slate-100 placeholder-slate-600 border border-slate-600 rounded-md py-2.5 px-3 outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"/>
+            </label>
+
+            <label class="flex flex-col gap-1.5 text-sm font-semibold text-slate-300">
+                Cuenta bancaria (IBAN)
+                <input type="text" id="cuentaBancaria" name="cuentaBancaria" placeholder="ES00 0000 0000 0000 0000 0000"
+                       class="bg-slate-900 text-slate-100 placeholder-slate-600 border border-slate-600 rounded-md py-2.5 px-3 outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"/>
+            </label>
+
+            <button type="submit"
+                    class="mt-2 w-full bg-amber-500 hover:bg-amber-600 text-slate-950 hover:text-white font-bold py-3 rounded-lg shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transition-all duration-200 cursor-pointer">
+                Registrarse
+            </button>
+        </form>
+
+        <p class="text-center text-sm text-slate-500 mt-6">
+            ¿Ya tienes cuenta?
+            <span class="text-amber-400 font-semibold">Pulsa Identificarme en el menú</span>
+        </p>
+    </div>
+</section>

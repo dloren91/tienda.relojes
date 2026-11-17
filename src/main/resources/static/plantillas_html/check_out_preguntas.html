@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paso 3 - Cuestionario - Lorenzo Relojes</title>
+    <!-- CDN de Tailwind CSS v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased flex flex-col items-center justify-center p-4">
+
+<!-- CONTENEDOR DEL FORMULARIO -->
+<main class="w-full max-w-lg bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl">
+
+    <!-- CABECERA DEL PASO 3 -->
+    <div class="text-center mb-6">
+            <span class="text-[11px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
+                Paso 3 de 3
+            </span>
+        <h1 class="text-2xl font-black text-white mt-3 tracking-tight">Preguntas sobre tus relojes</h1>
+        <p class="text-slate-400 text-xs sm:text-sm mt-1">
+            Cuéntanos un poco más sobre tu pasión por la relojería antes de confirmar.
+        </p>
+    </div>
+
+    <!-- FORMULARIO -->
+    <form th:action="@{/procesarPaso3}" method="post" class="flex flex-col gap-5">
+
+        <!-- PREGUNTA 1 -->
+        <div class="flex flex-col gap-1.5">
+            <label for="resPregunta1" class="text-xs font-bold text-slate-300 flex items-center gap-2">
+                <span>⌚</span> 1. ¿Cuál fue el último reloj que te compraste?
+            </label>
+            <input type="text"
+                   id="resPregunta1"
+                   name="resPregunta1"
+                   required
+                   placeholder="Ej: Reloj verde de Ben 10, Casio F-91W..."
+                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-amber-500 transition-colors">
+        </div>
+
+        <!-- PREGUNTA 2 -->
+        <div class="flex flex-col gap-1.5">
+            <label for="resPregunta2" class="text-xs font-bold text-slate-300 flex items-center gap-2">
+                <span>✨</span> 2. ¿Cuánto te costó?
+            </label>
+            <input type="text"
+                   id="resPregunta2"
+                   name="resPregunta2"
+                   required
+                   placeholder="Ej: Graff Diamonds Hallucination, Rolex Daytona..."
+                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-amber-500 transition-colors">
+        </div>
+
+        <!-- BOTÓN SUBMIT -->
+        <button type="submit"
+                class="mt-3 w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm py-3 px-4 rounded-xl transition-colors shadow-lg shadow-amber-500/10 flex items-center justify-center gap-2 cursor-pointer">
+            <span>Guardar y continuar</span>
+            <span>→</span>
+        </button>
+
+    </form>
+
+</main>
+
+</body>
+</html>
